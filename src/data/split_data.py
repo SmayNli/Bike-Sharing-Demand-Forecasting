@@ -16,7 +16,6 @@ def Xy_split(df: pd.DataFrame):
     return X, y
 
 
-
 if __name__ == "__main__":
     df = load_data()
     df = preprocess(df)

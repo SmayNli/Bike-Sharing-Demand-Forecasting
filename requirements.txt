@@ -5,3 +5,4 @@ statsmodels
 pyyaml
 xgboost
 scikit-learn
+optuna
