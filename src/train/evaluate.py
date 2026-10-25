@@ -7,8 +7,9 @@ from sklearn.metrics import root_mean_squared_error, mean_absolute_error, r2_sco
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-df = load_data()
-df = preprocess(df)
+df_day = load_data()
+df_hour = load_data("hour")
+df = preprocess(df_day, df_hour)
 train, test = train_test_split_by_date(df)
 X_train, y_train = Xy_split(train)
 X_test, y_test = Xy_split(test)

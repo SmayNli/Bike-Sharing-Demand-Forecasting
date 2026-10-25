@@ -18,18 +18,33 @@ def lag_features(df: pd.DataFrame):
 
     return df
 
-def preprocess(df: pd.DataFrame):
-    df = clean_data(df)
-    df = lag_features(df)
+def hourly_features(df: pd.DataFrame):
+    bad_weather = list(df[(df["hr"]>=17) & (df["hr"]<=19) & (df["weathersit"].isin([3,4]))].index)
+    df.loc[bad_weather, "rush_hour_bad_weather"] = int(1)
+    df["rush_hour_bad_weather"] = df["rush_hour_bad_weather"].fillna(int(0))
 
-    return df
+    rush_hour_bad_weather = df.groupby("dteday")["rush_hour_bad_weather"].max()
+
+    hourly_features = rush_hour_bad_weather
+
+    return hourly_features
+
+def preprocess(df_day: pd.DataFrame, df_hour: pd.DataFrame):
+    df_day = clean_data(df_day)
+    df_hour = clean_data(df_hour)
+
+    df_day = lag_features(df_day)
+    df_day = df_day.merge(hourly_features(df_hour), how="left", on="dteday")
+
+    return df_day
 
 if __name__ == "__main__":
-    df = load_data()
+    df_day = load_data()
+    df_hour = load_data("hour")
 
-    df = preprocess(df)
+    df = preprocess(df_day, df_hour)
 
-    print(df.head())
+    print(df.describe())
 
 
 
