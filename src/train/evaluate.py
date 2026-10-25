@@ -4,7 +4,8 @@ from src.features import preprocess
 from src.train.baseline import train_model
 from xgboost import XGBRegressor
 from sklearn.metrics import root_mean_squared_error, mean_absolute_error, r2_score
-
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 df = load_data()
 df = preprocess(df)
@@ -29,3 +30,16 @@ y_preds = model.predict(X_test)
 print("RMSE: ", root_mean_squared_error(y_test, y_preds))
 print("MAE: ", mean_absolute_error(y_test, y_preds))
 print("R2: ", r2_score(y_test, y_preds))
+
+plt.style.use("ggplot")
+plt.figure(figsize=(18,6))
+plt.title(f"XGBoost Test Data Performance (R²: {r2_score(y_test, y_preds):.2f} | MAE: {mean_absolute_error(y_test, y_preds):.0f})")
+sns.lineplot(data=test, x="dteday", y=y_test.values, label="Actual Values", color="black")
+sns.lineplot(data=test, x="dteday", y=y_preds, linestyle="--", label="Predicted Values", color="crimson")
+plt.xlabel("Date")
+plt.ylabel("Count")
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.show()
+plt.show()
