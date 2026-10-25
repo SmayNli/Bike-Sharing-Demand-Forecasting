@@ -6,6 +6,8 @@ from xgboost import XGBRegressor
 from sklearn.metrics import root_mean_squared_error, mean_absolute_error, r2_score
 import matplotlib.pyplot as plt
 import seaborn as sns
+import yaml
+from pathlib import Path
 
 df_day = load_data()
 df_hour = load_data("hour")
@@ -31,6 +33,12 @@ y_preds = model.predict(X_test)
 print("RMSE: ", root_mean_squared_error(y_test, y_preds))
 print("MAE: ", mean_absolute_error(y_test, y_preds))
 print("R2: ", r2_score(y_test, y_preds))
+
+with open("configs.yaml", "r", encoding="utf-8") as f:
+    configs = yaml.safe_load(f)
+
+model_path = Path(configs["model"]["model_path"])
+model.save_model(model_path / "model.json")
 
 plt.style.use("ggplot")
 plt.figure(figsize=(18,6))

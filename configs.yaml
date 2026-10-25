@@ -1,3 +1,6 @@
 data:
   day_data_path: "data/day.csv"
   hour_data_path: "data/hour.csv"
+
+model:
+  model_path: "models"
