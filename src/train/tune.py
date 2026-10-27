@@ -36,13 +36,15 @@ def objective(trial):
 
     return np.mean(scores)
 
-df = load_data()
-df = preprocess(df)
+df_day = load_data()
+df_hour = load_data("hour")
+df = preprocess(df_day, df_hour)
 train, test = train_test_split_by_date(df)
 X, y = Xy_split(train)
 
-study = optuna.create_study(direction="minimize")
-study.optimize(objective, n_trials=100)
+if __name__ == "__main__":
+    study = optuna.create_study(direction="minimize")
+    study.optimize(objective, n_trials=100)
 
-print("Best RMSE: ", study.best_value)
-print("Best Hyperparameters: ", study.best_params)
+    print("Best RMSE: ", study.best_value)
+    print("Best Hyperparameters: ", study.best_params)

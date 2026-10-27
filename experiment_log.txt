@@ -1,0 +1,57 @@
+=================================================
+Referance Model: Baseline XGBoost (CV RMSE: 1376)
+=================================================
+
+Experiment 1: Feature: [cnt_lag1, cnt_lag7]
+RMSE Before: 1376
+RMSE After: 1225
+Delta: -151
+Status: NOT IN USE
+
+Experiment 2: Feature: [cnt_rolling7, cnt_rolling30]
+RMSE Before: 1376
+RMSE After: 979
+Delta: -397
+Status: IN USE
+
+Experiment 3: Feature: rush_hour_bad_weather
+RMSE Before: 1376
+RMSE After: 1395
+Delta: +19
+Status: IN USE
+
+Experiment 4: Feature: lag_features(complete)
+RMSE Before: 1376
+RMSE After: 1028
+Delta: -348
+-After comparising with Experiment 2's results, decided to update status of [cnt_lag1, cnt_lag7] features to 'NOT IN USE'
+
+Experiment 5: Feature: [cnt_rolling7, cnt_rolling30, rush_hour_bad_weather]
+RMSE Before: 1376
+RMSE After: 963
+Delta: -413
+-After occuring better results with smooth trend line and 'rush_hour_bad_weather' feature, updated status of 'rush_hour_bad_weather' feature to 'IN USE'
+
+Experiment 6: Model Fine-tuning
+-Ran optuna with 'IN USE' features
+RMSE Before: 963
+RMSE After: 813
+Delta: -150
+-Fine tuning the model improved it's RMSE by 150 points compared to non-fine-tuned model.
+
+===================
+Hold-out Evaluation
+===================
+RMSE: 938.3212280273438
+MAE: 661.5000610351562
+R2: 0.7610434293746948
+
+
+
+================
+Planned Features
+================
+feature: hourly_features(max_wind)
+-----------------------------------------------------
+feature: hourly_features(morning_bad_weather(7 - 9))
+-----------------------------------------------------

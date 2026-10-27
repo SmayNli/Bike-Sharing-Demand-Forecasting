@@ -17,7 +17,8 @@ def Xy_split(df: pd.DataFrame):
 
 
 if __name__ == "__main__":
-    df = load_data()
-    df = preprocess(df)
+    df_day = load_data()
+    df_hour = load_data("hour")
+    df = preprocess(df_day, df_hour)
     train_data, test_data = train_test_split_by_date(df = df)
     X, y = Xy_split(train_data)

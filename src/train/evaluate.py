@@ -16,14 +16,14 @@ train, test = train_test_split_by_date(df)
 X_train, y_train = Xy_split(train)
 X_test, y_test = Xy_split(test)
 
-params = {'n_estimators': 155,
-                      'max_depth': 2,
-                      'learning_rate': 0.19672000712560175,
-                      'subsample': 0.8947515745740601,
-                      'colsample_bytree': 0.8685448913893068,
-                      'min_child_weight': 9,
-                      'reg_alpha': 2.1674832038511567,
-                      'reg_lambda': 0.4674721811076263}
+params = {'n_estimators': 437,
+          'max_depth': 2,
+          'learning_rate': 0.12789383743158597,
+          'subsample': 0.7068460688689063,
+          'colsample_bytree': 0.746632661529137,
+          'min_child_weight': 6,
+          'reg_alpha': 0.06806742884718651,
+          'reg_lambda': 1.3382841484189152}
 
 model = XGBRegressor(**params, random_state=42)
 model.fit(X_train, y_train)
@@ -50,5 +50,4 @@ plt.ylabel("Count")
 plt.legend()
 plt.grid(True, alpha=0.3)
 plt.tight_layout()
-plt.show()
 plt.show()

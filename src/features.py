@@ -8,8 +8,8 @@ def clean_data(df: pd.DataFrame):
     return df
 
 def lag_features(df: pd.DataFrame):
-    df["cnt_lag_1"] = df["cnt"].shift(1)
-    df["cnt_lag_7"] = df["cnt"].shift(7)
+    #df["cnt_lag_1"] = df["cnt"].shift(1)
+    #df["cnt_lag_7"] = df["cnt"].shift(7)
 
     df["cnt_rolling7"] = df["cnt"].shift(1).rolling(window=7).mean()
     df["cnt_rolling30"] = df["cnt"].shift(1).rolling(window=30).mean()
@@ -29,7 +29,7 @@ def hourly_features(df: pd.DataFrame):
 
     return hourly_features
 
-def preprocess(df_day: pd.DataFrame, df_hour: pd.DataFrame):
+def preprocess(df_day: pd.DataFrame, df_hour: pd.DataFrame = None):
     df_day = clean_data(df_day)
     df_hour = clean_data(df_hour)
 

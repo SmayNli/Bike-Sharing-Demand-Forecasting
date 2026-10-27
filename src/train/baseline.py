@@ -35,11 +35,19 @@ def train_model(X, y, model=XGBRegressor()):
     return np.mean(rmse_scores), np.mean(mae_scores), np.mean(r2_scores)
 
 def run_experiment(X, y):
+    params = {'n_estimators': 155,
+                      'max_depth': 2,
+                      'learning_rate': 0.19672000712560175,
+                      'subsample': 0.8947515745740601,
+                      'colsample_bytree': 0.8685448913893068,
+                      'min_child_weight': 9,
+                      'reg_alpha': 2.1674832038511567,
+                      'reg_lambda': 0.4674721811076263}
     results = []
     models = {
         "Ridge": Ridge(),
         "Random Forest": RandomForestRegressor(random_state=42),
-        "XGBoost": XGBRegressor(random_state=42),
+        "XGBoost": XGBRegressor(**params, random_state=42),
         "LightGBM": LGBMRegressor(random_state=42, verbose=-1)
     }
 
@@ -50,12 +58,17 @@ def run_experiment(X, y):
 
     print(pd.DataFrame(results))
 
-def main():
-    df = load_data()
-    df = preprocess(df)
+def main(run_experiment_ = False):
+    df_day = load_data()
+    df_hour = load_data("hour")
+    df = preprocess(df_day, df_hour)
     train, test = train_test_split_by_date(df)
     X, y = Xy_split(train)
-    run_experiment(X, y)
+
+    if run_experiment_ == True:
+        run_experiment(X, y)
+    else:
+        train_model(X, y)
 
 if __name__ == "__main__":
     main()
