@@ -129,3 +129,13 @@ python -m src.train.tune
 ```bash
 python -m src.train.evaluate
 ```
+
+---
+
+## Dataset & License
+
+This project uses the **Bike Sharing Dataset** by Hadi Fanaee-T, obtained from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset).
+
+- **Citation:** Fanaee-T, H. (2013). Bike Sharing [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5W894
+- **License:** [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)
+- **Download:** [Official UCI Dataset Page](https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset)
