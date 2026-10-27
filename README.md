@@ -98,7 +98,7 @@ Analysis identified near-perfect collinearity (~0.99) between `temp` and `atemp`
 
 ### 1. Clone & Set Up Environment
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/SmayNli/Bike-Sharing-Demand-Forecasting
 cd bike-sharing-dataset
 python -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
