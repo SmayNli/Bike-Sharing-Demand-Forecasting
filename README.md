@@ -8,15 +8,25 @@ The project strictly adheres to industry standards: **prevention of lookahead bi
 
 ## Key Highlights & Results
 
-Through disciplined feature engineering and Bayesian hyperparameter tuning, model performance progressed steadily on the untouched hold-out test set (October – December 2012):
+### 1. Controlled Experimentation Journey (Cross-Validation / `TimeSeriesSplit`)
+All feature engineering, architectural decisions, and hyperparameter tuning were conducted strictly within a 5-fold expanding-window `TimeSeriesSplit` cross-validation on the training set to prevent test leakage:
 
-| Iteration | Model / Configuration | Test RMSE | Test MAE | Test R² |
+| Experiment | Features / Model Configuration | CV RMSE | Delta vs. Baseline | Decision |
 | :--- | :--- | :---: | :---: | :---: |
-| **Initial Tuned Baseline** | XGBoost (with initial lag features) | 1055.46 | 787.84 | 0.700 |
-| **Bottom-Up FE** | + Rush Hour Bad Weather (17:00–19:00) | 1008.00 | 747.00 | 0.720 |
-| **Optimal Rolling Model** | **Fine-Tuned XGBoost (Rolling + Rush Hour)** | **938.32** | **661.50** | **0.761** |
+| **Reference** | Baseline XGBoost (Raw Data) | 1376.00 | - | Baseline |
+| **Exp 1** | + Raw Lags (`cnt_lag1`, `cnt_lag7`) | 1225.00 | -151 | NOT IN USE |
+| **Exp 2** | + Rolling Windows (`cnt_rolling7`, `cnt_rolling30`) | 979.00 | -397 | **IN USE** |
+| **Exp 5** | + Rolling Windows & `rush_hour_bad_weather` (17:00–19:00) | 963.00 | -413 | **IN USE** |
+| **Exp 6** | + Bayesian Hyperparameter Optimization (Optuna) | **813.00** | **-563** | **FINAL MODEL CANDIDATE** |
 
-> **Business Impact:** During the test period (where average daily rentals were ~5,700), the final model achieved an average error of only **661.5 bikes (~11.6% MAPE)**, successfully explaining **76.1% of the total variance** on completely unseen future data.
+### 2. Sealed Hold-out Test Set Evaluation
+The sealed test set (October – December 2012, 92 days) was evaluated strictly **once** at the conclusion of the project on the final optimized model:
+
+- **Hold-out Test RMSE:** `938.32`
+- **Hold-out Test MAE:** `661.50`
+- **Hold-out Test R²:** `0.761` (76.1% of variance explained)
+
+> **Business Impact:** Across the hold-out test period (where average daily rentals were ~5,700), the final model achieved an average error of only **661.5 bikes (~11.6% MAPE)** on completely unseen future data.
 
 ### Model Predictions vs. Actual Demand
 The fine-tuned model tracks both the underlying seasonal decline and high-frequency day-to-day demand shifts closely:

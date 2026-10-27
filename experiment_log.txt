@@ -45,13 +45,3 @@ Hold-out Evaluation
 RMSE: 938.3212280273438
 MAE: 661.5000610351562
 R2: 0.7610434293746948
-
-
-
-================
-Planned Features
-================
-feature: hourly_features(max_wind)
------------------------------------------------------
-feature: hourly_features(morning_bad_weather(7 - 9))
------------------------------------------------------

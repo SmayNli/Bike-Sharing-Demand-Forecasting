@@ -58,14 +58,14 @@ def run_experiment(X, y):
 
     print(pd.DataFrame(results))
 
-def main(run_experiment_ = False):
+def main(experiment = False):
     df_day = load_data()
     df_hour = load_data("hour")
     df = preprocess(df_day, df_hour)
     train, test = train_test_split_by_date(df)
     X, y = Xy_split(train)
 
-    if run_experiment_ == True:
+    if experiment == True:
         run_experiment(X, y)
     else:
         train_model(X, y)
